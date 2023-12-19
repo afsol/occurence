@@ -52,15 +52,18 @@
                 </div>
             </div>
         </div>
-
-
-    <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
-    <script>
-        $wire.on('hide-modal', () => {
-            $('#exampleModal').modal('hide');
-        });
-    </script>
 </div>
+
+
+
+@script
+<script>
+    $wire.on('hide-modal', () => {
+        console.log('Event received!');
+        $('#exampleModal').modal('hide');
+    });
+</script>
+@endscript
 
 
 

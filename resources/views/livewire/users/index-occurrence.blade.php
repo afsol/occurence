@@ -1,7 +1,7 @@
 <div>
     <div class="card mt-3">
         <div class="card-body">
-            <input wire:model.live="filters.query" class="form-control mr-sm-2 mb-2" type="search" placeholder="Search">
+            <input wire:model.live="filters.query" class="form-control mr-sm-2 mb-2" type="search" placeholder="Search" aria-label="Search">
 
             <table class="table table-striped">
                 <thead>
@@ -18,10 +18,7 @@
                             <td>{!! $occurrence->description !!}</td>
                             <td>
                                 @if($occurrence->media->isNotEmpty())
-                                    @foreach ($occurrence->media as $images)
-                                        <img src="{{ $images->getUrl() }}" alt="Occurrence Image" width="50" height="50">
-                                        
-                                    @endforeach
+                                    <img src="{{ $occurrence->media->first()->getUrl() }}" alt="Occurrence Image" width="50" height="50">
                                 @else
                                     No Image
                                 @endif

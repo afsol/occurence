@@ -24,7 +24,7 @@
 
     <div class="mb-3">
         <label for="attachment" class="form-label">Attachment:</label>
-        <input wire:model="attachment[]" type="file" class="form-control multiple" multiple >
+        <input wire:model="attachment" type="file" class="form-control">
         {{-- <livewire:media-library wire:model="attachment" /> --}}
         @error('attachment') <span class="text-danger">{{ $message }}</span> @enderror
     </div>

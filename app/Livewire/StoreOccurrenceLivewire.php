@@ -39,7 +39,7 @@ class StoreOccurrenceLivewire extends Component
             'occurrence_type_id' => $this->occurrenceType,
         ]);
 
-        $occurrence->addFromMediaLibraryRequest($this->attachment)
+        $occurrence->addMedia($this->attachment)
         ->toMediaCollection('occurrences');
 
         if ($this->attachment) {

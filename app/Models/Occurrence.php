@@ -12,12 +12,6 @@ class Occurrence extends Model implements HasMedia
     use InteractsWithMedia;
     use HasFactory;
     protected $fillable = ['occurrence_type_id', 'description'];
-
-    public function registerMediaCollections(): void
-    {
-        $this->addMediaCollection('attachments');
-    }
-
     public function type()
     {
         return $this->belongsTo(OccurrenceType::class, 'occurrence_type_id');
