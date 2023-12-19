@@ -12,7 +12,6 @@ class OccurrenceController extends Controller
      */
     public function index()
     {
-        // dd(1);
         return view('users.index-occurrence');
     }
 
@@ -29,23 +28,21 @@ class OccurrenceController extends Controller
      */
     public function store(Request $request)
     {
-
         $request->validate([
             'occurrenceType' => 'required',
             'description' => 'required',
+            'attachment' => 'nullable|image|max:1024',
         ]);
 
-         $occurrence = Occurrence::create([
+        $occurrence = Occurrence::create([
             'occurrence_type_id' => $request->input('occurrenceType'),
             'description' => $request->input('description'),
         ]);
 
-            $attachmentImages = $request->attachment;
-            foreach($attachmentImages as $attachment)
-            {
-                $occurrence->addMedia($attachment)
-                    ->toMediaCollection('attachments');
-            }
+        if ($request->hasFile('attachment')) {
+            $occurrence->addMedia($request->file('attachment'))
+                ->toMediaCollection('attachments');
+        }
 
 
         return redirect()->back()->with('success', 'Occurrence saved successfully.');

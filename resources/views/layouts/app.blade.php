@@ -1,12 +1,5 @@
 <x-laravel-ui-adminlte::adminlte-layout>
-    
-    <!-- DataTables JavaScript -->
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js">
-    </script>
-
-    {{-- language Change --}}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
+    <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
     @livewireStyles
     <body class="hold-transition sidebar-mini layout-fixed">
         <div class="wrapper">
@@ -75,5 +68,3 @@
 
 </x-laravel-ui-adminlte::adminlte-layout>
 @stack('scripts')
-<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
-   

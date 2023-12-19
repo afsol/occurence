@@ -2,18 +2,19 @@
 
 namespace App\Livewire\Users;
 
-use Livewire\Component;
 use App\Models\Occurrence;
 use App\Models\OccurrenceType;
+use Livewire\Component;
 
-class CardView extends Component
+class CardsLivewire extends Component
 {
     public $occurrenceSum;
     public $occurrenceTypeSum;
-
     public function render()
     {
-        return view('livewire.users.card-view');
+        // $occurrenceSum = Occurrence::count();
+        return view('livewire.users.cards-livewire');
+
     }
 
     public function totalOccurrence()

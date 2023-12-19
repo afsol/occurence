@@ -2,8 +2,8 @@
 
 namespace App\Livewire\Users;
 
-use App\Models\Occurrence;
 use Livewire\Component;
+use App\Models\Occurrence;
 use Livewire\WithPagination;
 
 class IndexOccurrence extends Component
@@ -11,9 +11,9 @@ class IndexOccurrence extends Component
 
     use WithPagination;
     public $filters = ['query' => null];
-
     public function render()
     {
+
         $occurrences = $this->getData();
 
         return view('livewire.users.index-occurrence', compact('occurrences'));
@@ -22,14 +22,16 @@ class IndexOccurrence extends Component
     {
         $query = Occurrence::with(['type:id,name', 'media']);
 
-        if ($this->filters['query'] != null) {
-            $query->where('description', 'like', '%'.$this->filters['query'].'%')
-                ->orWhereHas('type', function ($typeQuery) {
-                    $typeQuery->where('name', 'like', '%'.$this->filters['query'].'%');
-                });               
-        }
-
-        return $query->paginate(5);
-
+        $query->when($this->filters['query'], function ($q, $searchQuery) {
+            return $q->where(function ($subquery) use ($searchQuery) {
+                $subquery->where('id', 'like', "%{$searchQuery}%")
+                    ->orWhere('description', 'like', "%{$searchQuery}%")
+                    ->orWhereHas('type', function ($typeQuery) use ($searchQuery) {
+                        $typeQuery->where('name', 'like', "%{$searchQuery}%");
+                    });
+            });
+        });
+        
+        return $query->paginate(2);
     }
 }

@@ -56,15 +56,20 @@
                             </select>
                         </div>
 
-                        <div class="mb-3">
-                            <label for="description" class="form-label">Description:</label>
-                            <textarea name="description" class="form-control" id="description"></textarea>
-                        </div>
+                        <x-dashboard.ui.text-editor name="description" id="description" label="Description:" class="abc" subtext="This is to be used for describing the text editor"/>
 
-                        <div class="mb-3">
+
+<x-ht-form-group>
+    <p>This is a form group</p>
+    <div class="mb-3">
+        <label for="attachment" class="form-label">Attachment:</label>
+        <input name="attachment" type="file" class="form-control">
+    </div>
+</x-ht-form-group>
+                        {{-- <div class="mb-3">
                             <label for="attachment" class="form-label">Attachment:</label>
-                            <input name="attachment[]" type="file" class="form-control" multiple>
-                        </div>
+                            <input name="attachment" type="file" class="form-control">
+                        </div> --}}
 
                         <button type="submit" class="btn btn-primary">Save Occurrence</button>
                     </form>
@@ -78,11 +83,11 @@
 
     <script>
         $(document).ready(function() {
-          $('textarea#description').summernote({
-            placeholder: 'Description',
-            height: 200,
-          });
-    });
+            $('textarea#description').summernote({
+                placeholder: 'Description',
+                height: 200,
+            });
+        });
     </script>
 </body>
 

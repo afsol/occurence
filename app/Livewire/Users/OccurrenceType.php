@@ -14,6 +14,7 @@ class OccurrenceType extends Component
     public $newOccurrenceType;
     public $selectedOccurrenceType;
     public $isModalOpen = false;
+    public $filters = ['query' => null];
 
     protected $rules = [
         'newOccurrenceType' => 'required|unique:occurrence_types,name',
@@ -26,20 +27,33 @@ class OccurrenceType extends Component
 
     public function render()
     {
-        $occurrenceTypes = ModelsOccurrenceType::paginate(5);
+        $occurrenceTypes = $this->getData();
         return view('livewire.users.occurrence-type', compact('occurrenceTypes'));
+    }
+
+    public function getData()
+    {
+        $query = ModelsOccurrenceType::query();
+
+        $query->when($this->filters['query'], function ($q, $searchQuery) {
+            return $q->where(function ($subquery) use ($searchQuery) {
+                $subquery->where('id', 'like', "%{$searchQuery}%")
+                    ->orWhere('name', 'like', "%{$searchQuery}%");
+            });
+        });
+        return $query->paginate(2);
     }
 
     public function openModal()
     {
         $this->resetValidation();
         $this->newOccurrenceType = '';
-        $this->selectedOccurrenceType ='';
+        $this->selectedOccurrenceType = '';
     }
 
     public function closeModal()
     {
-          $this->dispatch('hide-modal');
+        $this->dispatch('hide-modal');
     }
 
     public function saveOccurrenceType()
@@ -51,7 +65,7 @@ class OccurrenceType extends Component
         ]);
 
         $this->closeModal();
-        // $this->refreshOccurrenceTypes();
+        $this->dispatch('hide-modal');
     }
 
     public function editOccurrenceType($occurrenceTypeId)
@@ -69,20 +83,11 @@ class OccurrenceType extends Component
         $this->selectedOccurrenceType->update(['name' => $this->newOccurrenceType]);
 
         $this->closeModal();
-        // $this->refreshOccurrenceTypes();
     }
 
     public function deleteOccurrenceType($occurrenceTypeId)
     {
         $occurrenceType = ModelsOccurrenceType::findOrFail($occurrenceTypeId);
         $occurrenceType->delete();
-
-        // $this->refreshOccurrenceTypes();
     }
-
-    // private function refreshOccurrenceTypes()
-    // {
-    //     $this->occurrenceTypes = ModelsOccurrenceType::all();
-    // }
 }
-
